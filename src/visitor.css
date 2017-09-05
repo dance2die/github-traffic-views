@@ -1,0 +1,13 @@
+.Visitor {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.Visitor-header {
+    background-color: #ccc;
+    color: #123;
+    padding: 10px;
+}
+.Visitor-content {
+
+}
