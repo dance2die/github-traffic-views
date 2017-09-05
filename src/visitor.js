@@ -14,17 +14,17 @@ export default class Visitor extends Component {
             repo: props.repo,
             visitorDetail: {},
             chartConfig: {
-                "chartType": "LineChart",
-                "colors": ['#a52714', '#097138'],
-                "options": {
-                    "title": 'Date vs. Views',
-                    "hAxis": { "title": 'Date' },
-                    "vAxis": { "title": 'Views' },
+                chartType: "LineChart",
+                colors: ['#a52714', '#097138'],
+                options: {
+                    title: 'Date vs. Views',
+                    hAxis: { title: 'Date' },
+                    vAxis: { title: 'Views' },
                 },
                 "columns": [
-                    { "type": 'date', "label": 'Date' },
-                    { "type": 'number', "label": 'Count' },
-                    { "type": 'number', "label": 'Uniques' },
+                    { type: 'date', label: 'Date' },
+                    { type: 'number', label: 'Count' },
+                    { type: 'number', label: 'Uniques' },
                 ]
             },
         };
@@ -45,16 +45,12 @@ export default class Visitor extends Component {
         }
 
         const rows = visitorDetail.views.map(view => {
-            var row = Object.keys(view).map(key => {
+            return Object.keys(view).map(key => {
                 if (key === "timestamp")
                     return new Date(view[key]);
                 return view[key];
             });
-            l("row", row);
-            return row;
         });
-
-        l("returning chart...", this.state, rows);
 
         const chart = <Chart
             chartType={chartConfig.chartType}
@@ -65,8 +61,6 @@ export default class Visitor extends Component {
             width="100%"
             height="150px"
         />;
-
-        l("chart", chart);
 
         return (
             <div className="Visitor">
