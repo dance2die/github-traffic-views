@@ -13,7 +13,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use(express.static('../src'));
+app.use(express.static('../public'));
 
 
 app.get('/', function (req, res) {
