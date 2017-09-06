@@ -55,9 +55,17 @@ export default class Visitor extends Component {
             chart = <div>No data to display...</div>;
         }
 
+        l('repo in visitor.js', repo);
+
+        let trafficURL = `${repo.html_url}/graphs/traffic`;
+
         return (
             <div className="Visitor">
-                <header className="Visitor-header">{repo}</header>
+                <header className="Visitor-header">
+                    <a href={trafficURL}>
+                        {repo.name}
+                    </a>
+                </header>
                 <section className="Visitor-content">
                     {chart}
                 </section>

@@ -84,10 +84,11 @@ app.get('/visitorMap/:user', (req, res) => {
         .then(response => {
             let repos = response.data;
             let visitorPromises = repos.map(repo => {
+                l("repo", repo);
                 return getVisitorDetail(user, repo.name)
                     .then(response => {
                         let visitorDetail = response.data;
-                        return { key: repo.name, value: visitorDetail };
+                        return { key: repo.name, value: visitorDetail, repo: repo };
                     })
                     .catch(error => {
                         l("repo error", error);

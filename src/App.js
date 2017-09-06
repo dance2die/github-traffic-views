@@ -50,7 +50,7 @@ class App extends Component {
 
     const visitors = visitorMap
       .map(visitor => {
-        const repo = visitor.key;
+        const repo = visitor.repo;
         const visitorDetail = visitor.value;
         const id = shortid.generate();
 

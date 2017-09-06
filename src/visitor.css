@@ -10,6 +10,13 @@
     color: #123;
     padding: 10px;
 }
-.Visitor-content {
 
+.Visitor-header a {
+    text-decoration: none;
+    text-decoration-style: wavy;
 }
+
+.Visitor-header a:visited {
+    color: pink;
+}
+
