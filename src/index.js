@@ -94,5 +94,5 @@ const fakeData = [
       "default_branch": "master"
     },
   ]
-ReactDOM.render(<App repos={fakeData} />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 

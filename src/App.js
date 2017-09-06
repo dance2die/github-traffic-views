@@ -54,7 +54,7 @@ class App extends Component {
     return axios.get(repoURL, {
       auth: {
         username: "dance2die",
-        password: apiKeys.GITHUB_DEVELOPER_KEY
+        password: apiKeys.GITHUB_DEVELOPER_KEY || process.env.GITHUB_DEVELOPER_KEY
       }
     });
   }
