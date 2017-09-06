@@ -12,12 +12,13 @@ class App extends Component {
     super(props);
 
     this.state = {
+      user: props.user,
       visitorMap: []
     }
   }
 
   componentDidMount() {
-    const apiURL = `${window.location.protocol}//${window.location.hostname}/visitorMap`;
+    const apiURL = `${window.location.protocol}//${window.location.hostname}/visitorMap/${this.state.user}`;
     l("apiURL", apiURL);
     axios.get(apiURL)
       .then(response => {

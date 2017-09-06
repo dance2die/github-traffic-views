@@ -39,8 +39,8 @@ function getRepos(user) {
     return axios.get(repoURL, { auth: getAuth() });
 };
 
-getVisitorDetail = (repo) => {
-    const repoURL = `https://api.github.com/repos/dance2die/${repo}/traffic/views`;
+getVisitorDetail = (user, repo) => {
+    const repoURL = `https://api.github.com/repos/${user}/${repo}/traffic/views`;
     return axios.get(repoURL, { auth: getAuth() });
 }
 
@@ -59,9 +59,11 @@ app.get('/getRepos/:user', (req, res) => {
         });
 });
 
-app.get('/getVisitorDetail/:repo', (req, res) => {
+app.get('/getVisitorDetail/:user/:repo', (req, res) => {
+    let user = req.params.user || "dance2die";
     let repo = req.params.repo || "MyAnimeListSharp";
-    getVisitorDetail(repo)
+
+    getVisitorDetail(user, repo)
         .then(response => {
             let details = response.data;
             l("details returnd:", details);
@@ -76,11 +78,13 @@ app.get('/getVisitorDetail/:repo', (req, res) => {
 
 app.get('/visitorMap/:user', (req, res) => {
     let user = req.params.user || "dance2die";
+    l("user:", user);
+
     getRepos(user)
         .then(response => {
             let repos = response.data;
             let visitorPromises = repos.map(repo => {
-                return getVisitorDetail(repo.name)
+                return getVisitorDetail(user, repo.name)
                     .then(response => {
                         let visitorDetail = response.data;
                         return { key: repo.name, value: visitorDetail };
