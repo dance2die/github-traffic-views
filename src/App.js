@@ -54,7 +54,7 @@ class App extends Component {
 
   getAuth = () => {
     const password = apiKeys ? apiKeys.GITHUB_DEVELOPER_KEY : process.env.GITHUB_DEVELOPER_KEY;
-    l("password:", password);
+    l("password:", password, process.env);
 
     return {
       username: "dance2die",
