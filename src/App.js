@@ -5,13 +5,15 @@ import Visitor from './visitor';
 // import { apiKeys } from './apiKeys';
 import shortid from 'short-id';
 
-let apiKeys = null;
-try {
-  apiKeys = require('./apiKeys').apiKeys;
-} catch(e) {}
 
 // debug
 const l = console.log;
+
+let apiKeys = null;
+try {
+  apiKeys = require('./apiKeys').apiKeys;
+  l(apiKeys);
+} catch (e) { }
 
 class App extends Component {
   constructor(props) {
@@ -50,21 +52,24 @@ class App extends Component {
       });
   }
 
+  getAuth = () => {
+    const password = apiKeys ? apiKeys.GITHUB_DEVELOPER_KEY : process.env.GITHUB_DEVELOPER_KEY;
+    l("password:", password);
+
+    return {
+      username: "dance2die",
+      password: password
+    };
+  }
+
   getRepos = (user) => {
     const repoURL = `https://api.github.com/users/${user}/repos?sort=updated&direction=desc&per_page=100`;
-    return axios.get(repoURL);
+    return axios.get(repoURL, { auth: this.getAuth() });
   }
 
   getVisitorDetail = (repo) => {
     const repoURL = `https://api.github.com/repos/dance2die/${repo}/traffic/views`;
-    const password = apiKeys ? apiKeys.GITHUB_DEVELOPER_KEY : process.env.GITHUB_DEVELOPER_KEY;
-    l("password:", password);
-    return axios.get(repoURL, {
-      auth: {
-        username: "dance2die",
-        password: password
-      }
-    });
+    return axios.get(repoURL, { auth: this.getAuth() });
   }
 
   render() {
