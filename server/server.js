@@ -14,11 +14,11 @@ app.use(function (req, res, next) {
     next();
 });
 
-// app.use(express.static('../public'));
-app.use('/static', express.static(path.join(__dirname, 'public')));
+app.use(express.static('/public'));
+// app.use('/static', express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res) {
-    res.send('Hello World!' + path.join(__dirname, 'public'));
+    res.send('Hello World! ' + path.join(__dirname, 'public'));
 });
 
 // app.get('/static', app.use(express.static('src')));
