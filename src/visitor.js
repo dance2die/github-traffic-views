@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Chart } from 'react-google-charts';
 import './visitor.css';
 // import axios from 'axios';
-// import apiKeys from './apiKeys';
 
 const l = console.log;
 
@@ -12,7 +11,7 @@ export default class Visitor extends Component {
 
         this.state = {
             repo: props.repo,
-            visitorDetail: {},
+            visitorDetail: props.visitorDetail,
             chartConfig: {
                 chartType: "LineChart",
                 colors: ['#a52714', '#097138'],
@@ -30,16 +29,9 @@ export default class Visitor extends Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            ...this.state,
-            visitorDetail: nextProps.visitorDetail
-        });
-    }
-
     render() {
         const { repo, chartConfig, visitorDetail } = this.state;
-
+        l("vistor.render", this.state);
         if (!visitorDetail.views || visitorDetail.views.length === 0) {
             return <div>loading chart...</div>;
         }
@@ -62,9 +54,11 @@ export default class Visitor extends Component {
             height="150px"
         />;
 
+        l("loading chart...");
+
         return (
             <div className="Visitor">
-                <header className="Visitor-header">{repo.full_name}</header>
+                <header className="Visitor-header">{repo}</header>
                 <section className="Visitor-content">
                     {chart}
                 </section>

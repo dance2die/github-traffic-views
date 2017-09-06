@@ -1,136 +1,86 @@
 import React, { Component } from 'react';
 import './App.css';
-// import axios from 'axios';
-import PropTypes from 'prop-types';
+import axios from 'axios';
 import Visitor from './visitor';
+import { apiKeys } from './apiKeys';
+
 
 // debug
- const l = console.log;
+const l = console.log;
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      repos: props.repos,
-      visitorDetail: {},
+      repos: [],
+      visitorMap: {},
     }
   }
 
   componentDidMount() {
+    this.getRepos("dance2die")
+      .then(response => {
+        let repos = response.data;
+        let visitorPromises = repos.map(repo => {
+          return this.getVisitorDetail(repo.name)
+            .then(response => {
+              let visitorDetail = response.data;
+              return {key: repo.name, value: visitorDetail};
+            })
+            .catch(error => {
+              alert("error!", error);
+              return "errorr!";
+            });
+        });
+
+        Promise.all(visitorPromises).then(visitorMap => {
+          this.setState({repos, visitorMap});
+        });
+      })
+      .catch(error => {
+        alert("Error while getting repos...", error);
+      });
+  }
+
+  getRepos = (user) => {
+    const repoURL = `https://api.github.com/users/${user}/repos?sort=updated&direction=desc&per_page=5`;
+    return axios.get(repoURL);
+  }
+
+  getVisitorDetail = (repo) => {
     // const repoURL = `https://api.github.com/users/dance2die/repos?sort=updated&direction=desc&per_page=3000`;
-    // axios.get(repoURL)
-    //   .then(response => {
-    //     l(response);
-    //   })
-    //   .catch(error => {
-    //     alert("error!!!!", error);
-    //   });
-
-    let visitorDetail = {
-      "count": 14850,
-      "uniques": 3782,
-      "views": [
-        {
-          "timestamp": "2016-10-10T00:00:00Z",
-          "count": 440,
-          "uniques": 143
-        },
-        {
-          "timestamp": "2016-10-11T00:00:00Z",
-          "count": 1308,
-          "uniques": 414
-        },
-        {
-          "timestamp": "2016-10-12T00:00:00Z",
-          "count": 1486,
-          "uniques": 452
-        },
-        {
-          "timestamp": "2016-10-13T00:00:00Z",
-          "count": 1170,
-          "uniques": 401
-        },
-        {
-          "timestamp": "2016-10-14T00:00:00Z",
-          "count": 868,
-          "uniques": 266
-        },
-        {
-          "timestamp": "2016-10-15T00:00:00Z",
-          "count": 495,
-          "uniques": 157
-        },
-        {
-          "timestamp": "2016-10-16T00:00:00Z",
-          "count": 524,
-          "uniques": 175
-        },
-        {
-          "timestamp": "2016-10-17T00:00:00Z",
-          "count": 1263,
-          "uniques": 412
-        },
-        {
-          "timestamp": "2016-10-18T00:00:00Z",
-          "count": 1402,
-          "uniques": 417
-        },
-        {
-          "timestamp": "2016-10-19T00:00:00Z",
-          "count": 1394,
-          "uniques": 424
-        },
-        {
-          "timestamp": "2016-10-20T00:00:00Z",
-          "count": 1492,
-          "uniques": 448
-        },
-        {
-          "timestamp": "2016-10-21T00:00:00Z",
-          "count": 1153,
-          "uniques": 332
-        },
-        {
-          "timestamp": "2016-10-22T00:00:00Z",
-          "count": 566,
-          "uniques": 168
-        },
-        {
-          "timestamp": "2016-10-23T00:00:00Z",
-          "count": 675,
-          "uniques": 184
-        },
-        {
-          "timestamp": "2016-10-24T00:00:00Z",
-          "count": 614,
-          "uniques": 237
-        }
-      ]
-    };
-
-    this.setState({
-      ...this.state,
-      visitorDetail: visitorDetail
-    }, (value) => {
-      // l("app.value", this.state);
+    const repoURL = `https://api.github.com/repos/dance2die/${repo}/traffic/views`;
+    return axios.get(repoURL, {
+      auth: {
+        username: "dance2die",
+        password: apiKeys.GITHUB_DEVELOPER_KEY
+      }
     });
   }
 
   render() {
-    const { repos, visitorDetail } = this.state;
+    const { repos, visitorMap } = this.state;
     // l("App", this.state);
+
+    if (!repos || repos.length === 0) {
+      return <div>Loading...</div>;
+    }
+
+    l("app.render.visitorMap", visitorMap);
+    const visitors = visitorMap.map(visitor => {
+      l("visitor inside app.map", visitor);
+      return <Visitor key={visitor.key} repo={visitor.key} visitorDetail={visitor.value} />;
+    });
+
+    l('visitors!!!', visitors);
 
     return (
       <div>
-        <Visitor repo={repos[0]} visitorDetail={visitorDetail} />
+        {visitors}
       </div>
     );
   }
 }
-App.propTypes = {
-  repos: PropTypes.array.isRequired
-};
-
 
 export default App;
