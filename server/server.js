@@ -19,9 +19,10 @@ const staticPath = path.join(__dirname, '../build');
 // app.use(express.static('build/'));
 app.use('/static', express.static(staticPath));
 
-app.get('/', function (req, res) {
-    res.send('Hello World! ' + staticPath);
-});
+// app.get('/', function (req, res) {
+//     res.send('Hello World! ' + staticPath);
+// });
+
 
 // app.get('/static', app.use(express.static('src')));
 
@@ -74,6 +75,13 @@ app.get('/visitorMap', (req, res) => {
             l("Error while getting repos...", error);
         });
 });
+
+// All remaining requests return the React app, so it can handle routing.
+// https://github.com/mars/heroku-cra-node/blob/master/server/index.js
+app.get('*', function(request, response) {
+    response.sendFile(path.resolve(__dirname, '../build', 'index.html'));
+  });
+
 
 const port = process.env.PORT || 3001;
 app.listen(port, function () {
