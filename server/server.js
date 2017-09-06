@@ -17,7 +17,7 @@ app.use(function (req, res, next) {
 const staticPath = path.join(__dirname, '../build');
 // app.use(express.static('/public'));
 // app.use(express.static('build/'));
-app.use('/static', express.static(staticPath));
+app.use('/app', express.static(staticPath));
 
 function getAuth() {
     // l("apiKeys.GITHUB_DEVELOPER_KEY", apiKeys);
