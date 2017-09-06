@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "8.3.0"
+    "node": "8.3.0",
+    "yarn": "0.24.6"
   },
   "dependencies": {
     "axios": "^0.16.2",
