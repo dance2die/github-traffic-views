@@ -14,10 +14,14 @@ app.use(function (req, res, next) {
     next();
 });
 
-const staticPath = path.join(__dirname, '../build');
-// app.use(express.static('/public'));
-// app.use(express.static('build/'));
-app.use('/app', express.static(staticPath));
+// const staticPath = path.join(__dirname, '../build');
+// // app.use(express.static('/public'));
+// // app.use(express.static('build/'));
+// app.use('/app', express.static(staticPath));
+
+// Serve static assets
+// https://medium.com/@patriciolpezjuri/using-create-react-app-with-react-router-express-js-8fa658bf892d
+app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
 function getAuth() {
     // l("apiKeys.GITHUB_DEVELOPER_KEY", apiKeys);
@@ -72,11 +76,11 @@ app.get('/', function (req, res) {
     res.send('Hello World! ' + staticPath);
 });
 
-// All remaining requests return the React app, so it can handle routing.
-// https://github.com/mars/heroku-cra-node/blob/master/server/index.js
-app.get('*', function(request, response) {
-    response.sendFile(path.resolve(staticPath, 'index.html'));
-  });
+// Always return the main index.html, so react-router render the route in the client
+// https://medium.com/@patriciolpezjuri/using-create-react-app-with-react-router-express-js-8fa658bf892d
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+});
 
 
 const port = process.env.PORT || 80;
