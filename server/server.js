@@ -19,14 +19,6 @@ const staticPath = path.join(__dirname, '../build');
 // app.use(express.static('build/'));
 app.use('/static', express.static(staticPath));
 
-// app.get('/', function (req, res) {
-//     res.send('Hello World! ' + staticPath);
-// });
-
-
-// app.get('/static', app.use(express.static('src')));
-
-
 function getAuth() {
     // l("apiKeys.GITHUB_DEVELOPER_KEY", apiKeys);
     const password = process.env.GITHUB_DEVELOPER_KEY;
@@ -74,6 +66,10 @@ app.get('/visitorMap', (req, res) => {
         .catch(error => {
             l("Error while getting repos...", error);
         });
+});
+
+app.get('/', function (req, res) {
+    res.send('Hello World! ' + staticPath);
 });
 
 // All remaining requests return the React app, so it can handle routing.
