@@ -17,7 +17,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const apiURL = `${window.location.protocol}//${window.location.hostname}:3001/visitorMap`;
+    const apiURL = `${window.location.protocol}//${window.location.hostname}/visitorMap`;
     l("apiURL", apiURL);
     axios.get(apiURL)
       .then(response => {
