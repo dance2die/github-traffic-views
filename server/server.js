@@ -44,8 +44,35 @@ getVisitorDetail = (repo) => {
     return axios.get(repoURL, { auth: getAuth() });
 }
 
-app.get('/visitorMap', (req, res) => {
-    getRepos("dance2die")
+app.get('/getRepos/:user', (req, res) => {
+    let user = req.params.user || "dance2die";
+    getRepos(user)
+        .then(response => {
+            // https://stackoverflow.com/questions/13554319/express-js-close-response
+            res.set("Connection", "close");
+            res.json(response);
+        })
+        .catch(error => {
+            l("error!", error);
+        });
+});
+
+app.get('/getVisitorDetail/:repo', (req, res) => {
+    let repo = req.params.repo || "MyAnimeListSharp";
+    getVisitorDetail(repo)
+        .then(response => {
+            // https://stackoverflow.com/questions/13554319/express-js-close-response
+            res.set("Connection", "close");
+            res.json(response);
+        })
+        .catch(error => {
+            l("error!", error);
+        });
+});
+
+app.get('/visitorMap/:user', (req, res) => {
+    let user = req.params.user || "dance2die";
+    getRepos(user)
         .then(response => {
             let repos = response.data;
             let visitorPromises = repos.map(repo => {
