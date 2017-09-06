@@ -13,8 +13,8 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use(express.static('../public'));
-
+// app.use(express.static('../public'));
+app.use('/static', express.static(path.join(__dirname, 'public')))
 
 app.get('/', function (req, res) {
     res.send('Hello World!')
