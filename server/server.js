@@ -16,6 +16,7 @@ app.use(function (req, res, next) {
 
 const staticPath = path.join(__dirname, '../public');
 // app.use(express.static('/public'));
+app.use(express.static('build/'));
 app.use('/static', express.static(staticPath));
 
 app.get('/', function (req, res) {
