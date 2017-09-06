@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const apiKeys = require('./apiKeys');
+// const apiKeys = require('./apiKeys');
 const axios = require('axios');
 
 const l = console.log;
@@ -21,7 +21,7 @@ app.get('/', function (req, res) {
 
 function getAuth() {
     // l("apiKeys.GITHUB_DEVELOPER_KEY", apiKeys);
-    const password = process.env.GITHUB_DEVELOPER_KEY || apiKeys.GITHUB_DEVELOPER_KEY;
+    const password = process.env.GITHUB_DEVELOPER_KEY;
     // l("password:", password);
 
     return {
