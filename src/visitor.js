@@ -47,11 +47,10 @@ export default class Visitor extends Component {
             columns={chartConfig.columns}
             graph_id={id}
             width="100%"
-            height="150px"
+            height="300px"
             chartPackages={['corechart']}
         />;
 
-        // if (!visitorDetail.views || visitorDetail.views.length === 0) {
         if (!rows || rows.length === 0) {
             chart = <div>No data to display...</div>;
         }

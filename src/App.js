@@ -19,7 +19,8 @@ class App extends Component {
 
   componentDidMount() {
     const apiURL = `${window.location.protocol}//${window.location.hostname}/visitorMap/${this.state.user}`;
-    l("apiURL", apiURL);
+    // l("apiURL", apiURL);
+
     axios.get(apiURL)
       .then(response => {
         l("res", response);
@@ -33,9 +34,8 @@ class App extends Component {
 
   render() {
     let { visitorMap } = this.state;
-    l("render, visitorMap", visitorMap);
+    // l("render, visitorMap", visitorMap);
 
-    // if (!repos || repos.length === 0) {
     if (!visitorMap || visitorMap.length === 0) {
       return <div>Loading...</div>;
     }
@@ -46,7 +46,7 @@ class App extends Component {
       // Show graph with most traffic history count
       .sort((a, b) => b.value.views.length - a.value.views.length);
 
-    l('vmap', visitorMap);
+    // l('vmap', visitorMap);
 
     const visitors = visitorMap
       .map(visitor => {

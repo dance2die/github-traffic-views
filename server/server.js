@@ -35,7 +35,7 @@ function getAuth() {
 }
 
 function getRepos(user) {
-    const repoURL = `https://api.github.com/users/${user}/repos?sort=updated&direction=desc&per_page=100`;
+    const repoURL = `https://api.github.com/users/${user}/repos?sort=updated&direction=desc&per_page=30`;
     return axios.get(repoURL, { auth: getAuth() });
 };
 
