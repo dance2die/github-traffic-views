@@ -13,7 +13,7 @@ let apiKeys = null;
 let envKeys = null;
 try {
   apiKeys = require('./apiKeys').apiKeys;
-  envKeys = require('./apiKeys').envKeys;
+  envKeys = require('./envKey').envKeys;
   l(apiKeys, envKeys);
 } catch (e) { }
 
