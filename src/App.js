@@ -3,6 +3,7 @@ import './App.css';
 import axios from 'axios';
 import Visitor from './visitor';
 import { apiKeys } from './apiKeys';
+import shortid from 'short-id';
 
 
 // debug
@@ -26,7 +27,7 @@ class App extends Component {
           return this.getVisitorDetail(repo.name)
             .then(response => {
               let visitorDetail = response.data;
-              return {key: repo.name, value: visitorDetail};
+              return { key: repo.name, value: visitorDetail };
             })
             .catch(error => {
               alert("error!", error);
@@ -35,7 +36,7 @@ class App extends Component {
         });
 
         Promise.all(visitorPromises).then(visitorMap => {
-          this.setState({repos, visitorMap});
+          this.setState({ repos, visitorMap });
         });
       })
       .catch(error => {
@@ -44,12 +45,11 @@ class App extends Component {
   }
 
   getRepos = (user) => {
-    const repoURL = `https://api.github.com/users/${user}/repos?sort=updated&direction=desc&per_page=5`;
+    const repoURL = `https://api.github.com/users/${user}/repos?sort=updated&direction=desc&per_page=100`;
     return axios.get(repoURL);
   }
 
   getVisitorDetail = (repo) => {
-    // const repoURL = `https://api.github.com/users/dance2die/repos?sort=updated&direction=desc&per_page=3000`;
     const repoURL = `https://api.github.com/repos/dance2die/${repo}/traffic/views`;
     return axios.get(repoURL, {
       auth: {
@@ -60,20 +60,29 @@ class App extends Component {
   }
 
   render() {
-    const { repos, visitorMap } = this.state;
+    let { repos, visitorMap } = this.state;
     // l("App", this.state);
 
     if (!repos || repos.length === 0) {
       return <div>Loading...</div>;
     }
 
-    l("app.render.visitorMap", visitorMap);
-    const visitors = visitorMap.map(visitor => {
-      l("visitor inside app.map", visitor);
-      return <Visitor key={visitor.key} repo={visitor.key} visitorDetail={visitor.value} />;
-    });
+    visitorMap = visitorMap
+      // Do not display graph with no traffic history
+      .filter(visitor => visitor.value.views.length > 0)
+      // Show graph with most traffic history count
+      .sort((a, b) => b.value.views.length - a.value.views.length);
 
-    l('visitors!!!', visitors);
+    l('vmap', visitorMap);
+
+    const visitors = visitorMap
+      .map(visitor => {
+        const repo = visitor.key;
+        const visitorDetail = visitor.value;
+        const id = shortid.generate();
+
+        return <Visitor key={id} id={id} repo={repo} visitorDetail={visitorDetail} />;
+      });
 
     return (
       <div>

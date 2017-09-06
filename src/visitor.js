@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Chart } from 'react-google-charts';
 import './visitor.css';
-// import axios from 'axios';
 
 const l = console.log;
 
@@ -10,6 +9,7 @@ export default class Visitor extends Component {
         super(props);
 
         this.state = {
+            id: props.id,
             repo: props.repo,
             visitorDetail: props.visitorDetail,
             chartConfig: {
@@ -20,7 +20,7 @@ export default class Visitor extends Component {
                     hAxis: { title: 'Date' },
                     vAxis: { title: 'Views' },
                 },
-                "columns": [
+                columns: [
                     { type: 'date', label: 'Date' },
                     { type: 'number', label: 'Count' },
                     { type: 'number', label: 'Uniques' },
@@ -30,11 +30,7 @@ export default class Visitor extends Component {
     }
 
     render() {
-        const { repo, chartConfig, visitorDetail } = this.state;
-        l("vistor.render", this.state);
-        if (!visitorDetail.views || visitorDetail.views.length === 0) {
-            return <div>loading chart...</div>;
-        }
+        const { id, repo, chartConfig, visitorDetail } = this.state;
 
         const rows = visitorDetail.views.map(view => {
             return Object.keys(view).map(key => {
@@ -44,17 +40,21 @@ export default class Visitor extends Component {
             });
         });
 
-        const chart = <Chart
+        let chart = <Chart
             chartType={chartConfig.chartType}
             rows={rows}
             options={chartConfig.options}
             columns={chartConfig.columns}
-            graph_id="LineChart"
+            graph_id={id}
             width="100%"
             height="150px"
+            chartPackages={['corechart']}
         />;
 
-        l("loading chart...");
+        // if (!visitorDetail.views || visitorDetail.views.length === 0) {
+        if (!rows || rows.length === 0) {
+            chart = <div>No data to display...</div>;
+        }
 
         return (
             <div className="Visitor">
