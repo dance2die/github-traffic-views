@@ -48,9 +48,11 @@ app.get('/getRepos/:user', (req, res) => {
     let user = req.params.user || "dance2die";
     getRepos(user)
         .then(response => {
+            let repos = response.data;
+            l("repos returned:", repos);
             // https://stackoverflow.com/questions/13554319/express-js-close-response
             res.set("Connection", "close");
-            res.json(response);
+            res.json(repos);
         })
         .catch(error => {
             l("error!", error);
@@ -61,9 +63,11 @@ app.get('/getVisitorDetail/:repo', (req, res) => {
     let repo = req.params.repo || "MyAnimeListSharp";
     getVisitorDetail(repo)
         .then(response => {
+            let details = response.data;
+            l("details returnd:", details);
             // https://stackoverflow.com/questions/13554319/express-js-close-response
             res.set("Connection", "close");
-            res.json(response);
+            res.json(details);
         })
         .catch(error => {
             l("error!", error);
