@@ -57,10 +57,12 @@ class App extends Component {
 
   getVisitorDetail = (repo) => {
     const repoURL = `https://api.github.com/repos/dance2die/${repo}/traffic/views`;
+    const password = apiKeys ? apiKeys.GITHUB_DEVELOPER_KEY : process.env.GITHUB_DEVELOPER_KEY;
+    l("password:", password);
     return axios.get(repoURL, {
       auth: {
         username: "dance2die",
-        password: apiKeys ? apiKeys.GITHUB_DEVELOPER_KEY : process.env.GITHUB_DEVELOPER_KEY
+        password: password
       }
     });
   }
