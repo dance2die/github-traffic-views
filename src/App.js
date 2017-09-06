@@ -12,8 +12,8 @@ const l = console.log;
 let apiKeys = null;
 let envKeys = null;
 try {
-  apiKeys = require('./apiKeys').apiKeys;
   envKeys = require('./envKey').envKeys;
+  apiKeys = require('./apiKeys').apiKeys;
   l(apiKeys, envKeys);
 } catch (e) { }
 
@@ -55,8 +55,9 @@ class App extends Component {
   }
 
   getAuth = () => {
+    l("envKeys", envKeys);
     const password = apiKeys ? apiKeys.GITHUB_DEVELOPER_KEY : envKeys.GITHUB_DEVELOPER_KEY;
-    l("password:", password, envKeys);
+    l("password:", password);
 
     return {
       username: "dance2die",
