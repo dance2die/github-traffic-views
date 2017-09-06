@@ -34,6 +34,7 @@ class App extends Component {
               return { key: repo.name, value: visitorDetail };
             })
             .catch(error => {
+              l("repo error", error);
               alert("error!", error);
               return "errorr!";
             });
