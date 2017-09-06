@@ -3,9 +3,9 @@ import './App.css';
 import axios from 'axios';
 import Visitor from './visitor';
 // import { apiKeys } from './apiKeys';
-const apiKeys = require('./apiKeys').apiKeys || null;
 import shortid from 'short-id';
 
+const apiKeys = require('./apiKeys').apiKeys || null;
 
 // debug
 const l = console.log;
