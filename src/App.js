@@ -35,7 +35,7 @@ class App extends Component {
             })
             .catch(error => {
               l("repo error", error);
-              alert("error!", error);
+              // alert("error!", error);
               return "errorr!";
             });
         });
@@ -45,6 +45,7 @@ class App extends Component {
         });
       })
       .catch(error => {
+        l("repoS error", error);
         alert("Error while getting repos...", error);
       });
   }
