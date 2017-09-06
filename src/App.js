@@ -5,7 +5,10 @@ import Visitor from './visitor';
 // import { apiKeys } from './apiKeys';
 import shortid from 'short-id';
 
-const apiKeys = require('./apiKeys').apiKeys || null;
+let apiKeys = null;
+try {
+  apiKeys = require('./apiKeys').apiKeys;
+} catch(e) {}
 
 // debug
 const l = console.log;
