@@ -14,7 +14,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-const staticPath = path.join(__dirname, '../build');
+const staticPath = path.join(__dirname, '../../build');
 // app.use(express.static('/public'));
 // app.use(express.static('build/'));
 app.use('/static', express.static(staticPath));
@@ -79,7 +79,7 @@ app.get('/visitorMap', (req, res) => {
 // All remaining requests return the React app, so it can handle routing.
 // https://github.com/mars/heroku-cra-node/blob/master/server/index.js
 app.get('*', function(request, response) {
-    response.sendFile(path.resolve(__dirname, '../build', 'index.html'));
+    response.sendFile(path.resolve(__dirname, '../../build', 'index.html'));
   });
 
 
