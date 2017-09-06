@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const apiKeys = require('../src/apiKeys');
+const apiKeys = require('./apiKeys');
 const axios = require('axios');
 
 const l = console.log;
