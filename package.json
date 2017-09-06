@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.16.2",
+    "express": "^4.15.4",
     "lodash": "^4.17.4",
     "prop-type": "^0.0.1",
     "react": "^15.6.1",

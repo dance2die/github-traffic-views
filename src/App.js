@@ -2,82 +2,40 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 import Visitor from './visitor';
-// import { apiKeys } from './apiKeys';
 import shortid from 'short-id';
-
 
 // debug
 const l = console.log;
-
-let apiKeys = null;
-try {
-  apiKeys = require('./apiKeys').apiKeys;
-  l(apiKeys, process.env.GITHUB_DEVELOPER_KEY);
-} catch (e) { }
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      repos: [],
-      visitorMap: {},
+      visitorMap: []
     }
   }
 
   componentDidMount() {
-    this.getRepos("dance2die")
+    const apiURL = `${window.location.protocol}//${window.location.hostname}:3001/visitorMap`;
+    l("apiURL", apiURL);
+    axios.get(apiURL)
       .then(response => {
-        let repos = response.data;
-        let visitorPromises = repos.map(repo => {
-          return this.getVisitorDetail(repo.name)
-            .then(response => {
-              let visitorDetail = response.data;
-              return { key: repo.name, value: visitorDetail };
-            })
-            .catch(error => {
-              l("repo error", error);
-              // alert("error!", error);
-              return "errorr!";
-            });
-        });
-
-        Promise.all(visitorPromises).then(visitorMap => {
-          this.setState({ repos, visitorMap });
-        });
+        l("res", response);
+        const visitorMap = response.data;
+        this.setState({ visitorMap });
       })
       .catch(error => {
-        l("repoS error", error);
-        alert("Error while getting repos...", error);
+        l("error in app.js", error);
       });
   }
 
-  getAuth = () => {
-    l("getAutho.process.env.GITHUB_DEVELOPER_KEY", process.env.GITHUB_DEVELOPER_KEY);
-    const password = apiKeys ? apiKeys.GITHUB_DEVELOPER_KEY : process.env.GITHUB_DEVELOPER_KEY;
-    l("password:", password);
-
-    return {
-      username: "dance2die",
-      password: password
-    };
-  }
-
-  getRepos = (user) => {
-    const repoURL = `https://api.github.com/users/${user}/repos?sort=updated&direction=desc&per_page=100`;
-    return axios.get(repoURL, { auth: this.getAuth() });
-  }
-
-  getVisitorDetail = (repo) => {
-    const repoURL = `https://api.github.com/repos/dance2die/${repo}/traffic/views`;
-    return axios.get(repoURL, { auth: this.getAuth() });
-  }
-
   render() {
-    let { repos, visitorMap } = this.state;
-    // l("App", this.state);
+    let { visitorMap } = this.state;
+    l("render, visitorMap", visitorMap);
 
-    if (!repos || repos.length === 0) {
+    // if (!repos || repos.length === 0) {
+    if (!visitorMap || visitorMap.length === 0) {
       return <div>Loading...</div>;
     }
 
