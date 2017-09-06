@@ -28,7 +28,7 @@ getAuth = () => {
 }
 
 getVisitorDetail = (repo) => {
-    l("-- getVisitorDetail --");
+    // l("-- getVisitorDetail --");
 
     const { login } = repo.owner;
     const url = `https://api.github.com/repos/${login}/${repo.name}/traffic/views`;
@@ -36,20 +36,13 @@ getVisitorDetail = (repo) => {
 }
 
 getUserDetail = (login) => {
-    l("-- getUserDetail --");
+    // l("-- getUserDetail --");
 
     const url = `https://api.github.com/users/${login}`;
     return axios.get(url, { auth: getAuth() });
 }
 
-// printData = (data) => {
-//     // l("---- print data2 ----", data);
-//     l("---- print data2 ----\n", Promise.all(data));
-// }
-
 getRepos = (user) => {
-    l("-- getRepos --");
-
     const login = user.data.login;
     const url = `https://api.github.com/users/${login}/repos?sort=updated&direction=desc&per_page=10`;
 
@@ -57,11 +50,7 @@ getRepos = (user) => {
 }
 
 getVisitorDetails = ({ data: repos }) => {
-    // l("repos2!!!", repos);
-
-    return repos.map(repo => {
-        // l("repo2!!!", repo);
-
+    let promises = repos.map(repo => {
         return getVisitorDetail(repo)
             .then(response => {
                 let visitorDetail = response.data;
@@ -74,43 +63,24 @@ getVisitorDetails = ({ data: repos }) => {
                 return { key: repo.name, value: {} };
             });
     });
+
+    return Promise.all(promises);
 }
 
 // testing deferred promises.
 // http://www.dotnetcurry.com/jquery/1022/jquery-ajax-deferred-promises
 app.get('/', function (req, res) {
-    var promises = getUserDetail("dance2die")
+    getUserDetail("dance2die")
         .then(getRepos)
         .then(getVisitorDetails)
-        // .then(printData)
-        .then(value => {
-            Promise.all(value)
-                .then(visitorMap => {
-                    l('visitorMap', visitorMap);
-                    
-                    // https://stackoverflow.com/questions/13554319/express-js-close-response
-                    res.set("Connection", "close");
-                    res.send(visitorMap);
-                });
+        .then(visitorMap => {
+            // https://stackoverflow.com/questions/13554319/express-js-close-response
+            res.set("Connection", "close");
+            res.send(visitorMap);
         })
         .catch(error => {
             l("error!", error);
         });
-
-    // Promise.all(promises)
-    //     .then(value => {
-    //         l('value', value);
-    //     })
-    //     // .then(visitorMap => {
-    //     //     l('visitorMap', visitorMap);
-
-    //     //     // https://stackoverflow.com/questions/13554319/express-js-close-response
-    //     //     res.set("Connection", "close");
-    //     //     res.json(visitorMap);
-    //     // })
-    //     .catch(error => {
-    //         l("Promise.all catch:", error);
-    //     });
 });
 
 const port = 9999;
