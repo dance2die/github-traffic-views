@@ -9,6 +9,7 @@
     background-color: #f6f8fa;
     color: #123;
     padding: 10px;
+    border: 1px solid #dfe2e5;
 }
 
 .Visitor-header a {
@@ -20,3 +21,21 @@
     color: pink;
 }
 
+.Visitor-footer {
+    display: flex;
+    
+}
+
+.Visitor-footer-stat {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    border: 1px solid #dfe2e5;
+    padding: 5px;
+    font-size: 0.8em;
+}
+
+.Visitor-footer-stat-num {
+    font-weight: 700;
+}

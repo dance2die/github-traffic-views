@@ -55,7 +55,7 @@ export default class Visitor extends Component {
             chart = <div>No data to display...</div>;
         }
 
-        l('repo in visitor.js', repo);
+        l('repo & visitorDetail in visitor.js', repo, visitorDetail);
 
         let trafficURL = `${repo.html_url}/graphs/traffic`;
 
@@ -69,6 +69,16 @@ export default class Visitor extends Component {
                 <section className="Visitor-content">
                     {chart}
                 </section>
+                <footer className="Visitor-footer">
+                    <div className="Visitor-footer-stat">
+                        <span className="Visitor-footer-stat-num">{visitorDetail.count}</span>
+                        <span>Views</span>
+                    </div>
+                    <div className="Visitor-footer-stat">
+                        <span className="Visitor-footer-stat-num">{visitorDetail.uniques}</span>
+                        <span>Unique visitors</span>
+                    </div>
+                </footer>
             </div>
         );
     }
