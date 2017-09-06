@@ -1,10 +1,12 @@
 .Visitor {
     border-radius: 5px;
     border: 1px solid #ccc;
+    width: 66%;
+    margin: 10px;
 }
 
 .Visitor-header {
-    background-color: #ccc;
+    background-color: #f6f8fa;
     color: #123;
     padding: 10px;
 }
