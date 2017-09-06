@@ -10,11 +10,9 @@ import shortid from 'short-id';
 const l = console.log;
 
 let apiKeys = null;
-let envKeys = null;
 try {
-  envKeys = require('./envKey').envKeys;
   apiKeys = require('./apiKeys').apiKeys;
-  l(apiKeys, envKeys);
+  l(apiKeys, process.env.GITHUB_DEVELOPER_KEY);
 } catch (e) { }
 
 class App extends Component {
@@ -55,8 +53,8 @@ class App extends Component {
   }
 
   getAuth = () => {
-    l("envKeys", envKeys);
-    const password = apiKeys ? apiKeys.GITHUB_DEVELOPER_KEY : envKeys.GITHUB_DEVELOPER_KEY;
+    l("getAutho.process.env.GITHUB_DEVELOPER_KEY", process.env.GITHUB_DEVELOPER_KEY);
+    const password = apiKeys ? apiKeys.GITHUB_DEVELOPER_KEY : process.env.GITHUB_DEVELOPER_KEY;
     l("password:", password);
 
     return {
