@@ -10,6 +10,7 @@
     "axios": "^0.16.2",
     "express": "^4.15.4",
     "lodash": "^4.17.4",
+    "promise": "^8.0.1",
     "prop-type": "^0.0.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",

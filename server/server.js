@@ -35,13 +35,18 @@ function getAuth() {
 }
 
 function getRepos(user) {
-    const repoURL = `https://api.github.com/users/${user}/repos?sort=updated&direction=desc&per_page=30`;
-    return axios.get(repoURL, { auth: getAuth() });
+    const url = `https://api.github.com/users/${user}/repos?sort=updated&direction=desc&per_page=10`;
+    return axios.get(url, { auth: getAuth() });
 };
 
 getVisitorDetail = (user, repo) => {
-    const repoURL = `https://api.github.com/repos/${user}/${repo}/traffic/views`;
-    return axios.get(repoURL, { auth: getAuth() });
+    const url = `https://api.github.com/repos/${user}/${repo}/traffic/views`;
+    return axios.get(url, { auth: getAuth() });
+}
+
+getUserDetail = (user) => {
+    const url = `https://api.github.com/users/${user}`;
+    return axios.get(url, { auth: getAuth() });
 }
 
 app.get('/getRepos/:user', (req, res) => {

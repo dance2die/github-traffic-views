@@ -34,7 +34,6 @@ class App extends Component {
 
   render() {
     let { visitorMap } = this.state;
-    // l("render, visitorMap", visitorMap);
 
     if (!visitorMap || visitorMap.length === 0) {
       return <div>Loading...</div>;
@@ -57,9 +56,16 @@ class App extends Component {
         return <Visitor key={id} id={id} repo={repo} visitorDetail={visitorDetail} />;
       });
 
+    l("--- render, visitorMap ---", visitorMap);
+
     return (
       <div className="App">
-        {visitors}
+        <header>
+          Visitor Graph for
+        </header>
+        <main>
+          {visitors}
+        </main>
       </div>
     );
   }
