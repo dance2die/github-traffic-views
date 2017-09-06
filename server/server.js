@@ -13,12 +13,14 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use(express.static('src'));
+
 
 app.get('/', function (req, res) {
     res.send('Hello World!')
 });
 
-app.get('/static', app.use(express.static('src')));
+// app.get('/static', app.use(express.static('src')));
 
 
 function getAuth() {
