@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 // const apiKeys = require('./apiKeys');
 const axios = require('axios');
@@ -7,12 +8,13 @@ const path = require('path');
 const l = console.log;
 
 // Enable CORS
-// https://enable-cors.org/server_expressjs.html
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+// // https://enable-cors.org/server_expressjs.html
+// app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+// });
+app.use(cors());
 
 // const staticPath = path.join(__dirname, '../build');
 // // app.use(express.static('/public'));
@@ -122,7 +124,7 @@ app.get('/visitorMap/:user', (req, res) => {
     .catch(error => {
         l("error!", error);
     });
-    
+
     // getRepos(user)
     //     .then(response => {
     //         let repos = response.data;
