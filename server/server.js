@@ -14,13 +14,13 @@ app.use(cors());
 // https://medium.com/@patriciolpezjuri/using-create-react-app-with-react-router-express-js-8fa658bf892d
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
-app.get('/visitorMap/:user', (req, res) => {
-    let user = req.params.user || "dance2die";
+app.get('/visitorMap/:login', (req, res) => {
+    let login = req.params.login || "dance2die";
     const { getUserDetail, getRepos, getVisitorDetails } = githubUtil;
 
-    getUserDetail("dance2die")
-        .then(getRepos)
+    getRepos(login)
         .then(getVisitorDetails)
+        .then(getUserDetail.bind(null, login))
         // Send "res" (response object) to the promise pipeline: https://stackoverflow.com/a/32912570/4035
         .then(sendDataAndCloseConnection.bind(null, res))
         .catch(handleError);
@@ -44,9 +44,15 @@ app.listen(port, function () {
 
 
 sendDataAndCloseConnection = (res, data) => {
-    // https://stackoverflow.com/questions/13554319/express-js-close-response
-    res.set("Connection", "close");
-    res.send(data);
+    l("sendDataAndCloseConnection.data", data);
+    Promise.all(data.visitorDetails)
+        .then(result => {
+            l("sendDataAndCloseConnection.result", result);
+
+            // https://stackoverflow.com/questions/13554319/express-js-close-response
+            res.set("Connection", "close");
+            res.send(result);
+        });
 }
 
 handleError = (error) => {

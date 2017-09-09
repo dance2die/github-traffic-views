@@ -35,6 +35,8 @@ class App extends Component {
   render() {
     let { visitorMap } = this.state;
 
+    l("visitorMap: begin", visitorMap);
+
     if (!visitorMap || visitorMap.length === 0) {
       return <div>Loading...</div>;
     }
@@ -61,7 +63,7 @@ class App extends Component {
     return (
       <div className="App">
         <header>
-          Visitor Graph for
+          Visitor Graph for {visitorMap.name}
         </header>
         <main>
           {visitors}
