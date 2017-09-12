@@ -23,8 +23,10 @@ class App extends Component {
 
     axios.get(apiURL)
       .then(response => {
-        l("res", response);
         const visitorMap = response.data;
+        l("==> res.data", response.data);
+        
+
         this.setState({ visitorMap });
       })
       .catch(error => {
@@ -34,14 +36,17 @@ class App extends Component {
 
   render() {
     let { visitorMap } = this.state;
+    l("state...", this.state);
 
     l("visitorMap: begin", visitorMap);
 
-    if (!visitorMap || visitorMap.length === 0) {
+    if (!visitorMap || !visitorMap.visitorDetails || visitorMap.visitorDetails.length === 0) {
       return <div>Loading...</div>;
     }
-
-    visitorMap = visitorMap
+    
+    const {visitorDetails, userDetail} = visitorMap;
+    
+    let filteredVisitorDetails = visitorDetails
       // Do not display graph with no traffic history
       .filter(visitor => visitor.value.views.length > 0)
       // Show graph with most traffic history count
@@ -49,7 +54,7 @@ class App extends Component {
 
     // l('vmap', visitorMap);
 
-    const visitors = visitorMap
+    const visitors = filteredVisitorDetails
       .map(visitor => {
         const repo = visitor.repo;
         const visitorDetail = visitor.value;
@@ -60,10 +65,12 @@ class App extends Component {
 
     l("--- render, visitorMap ---", visitorMap);
 
+    
+
     return (
       <div className="App">
         <header>
-          Visitor Graph for {visitorMap.name}
+          Visitor Graph for {userDetail.name} ({userDetail.login})
         </header>
         <main>
           {visitors}

@@ -51,7 +51,7 @@ sendDataAndCloseConnection = (res, data) => {
 
             // https://stackoverflow.com/questions/13554319/express-js-close-response
             res.set("Connection", "close");
-            res.send(result);
+            res.send({userDetail: data.userDetail, visitorDetails: result});
         });
 }
 
