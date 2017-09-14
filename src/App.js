@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import './App.css';
-import axios from 'axios';
-import Visitor from './visitor';
 import shortid from 'short-id';
+import axios from 'axios';
+
+import './App.css';
+import Visitor from './visitor';
+import UserCard from './UserCard';
 
 // debug
 const l = console.log;
@@ -70,7 +72,7 @@ class App extends Component {
     return (
       <div className="App">
         <header>
-          Visitor Graph for {userDetail.name} ({userDetail.login})
+          <UserCard userDetail={userDetail} />
         </header>
         <main>
           {visitors}

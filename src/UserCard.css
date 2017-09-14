@@ -1,0 +1,22 @@
+.UserCard {
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 0;
+    border: 1px solid #ccc;
+    width: 80%;
+}
+
+.UserCard main {
+    display: flex;
+    flex-direction: row;
+}
+
+.UserCard img {
+    width: 230px;
+    height: 230px;
+    border-radius: 6px;
+}
+
+.UserCard-follow {
+    border-top: 1px solid #eaecef;
+}
