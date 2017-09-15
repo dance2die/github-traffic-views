@@ -6,14 +6,32 @@
     width: 80%;
 }
 
+.UserCard-title {
+    padding: 15px;
+}
+
 .UserCard main {
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
+    padding: 0 0 15px 15px;
 }
 
+/* Avartar */
+.UserCard main > section:first-child {
+    padding-right: 15px;
+}
+
+/* content section */
+.UserCard main > section:nth-child(2) {
+    padding-right: 15px;
+    margin: -3px;
+}
+
+
 .UserCard img {
-    width: 230px;
-    height: 230px;
+    width: 100px;
+    height: 100px;
     border-radius: 6px;
 }
 

@@ -27,7 +27,7 @@ class App extends Component {
       .then(response => {
         const visitorMap = response.data;
         l("==> res.data", response.data);
-        
+
 
         this.setState({ visitorMap });
       })
@@ -45,9 +45,9 @@ class App extends Component {
     if (!visitorMap || !visitorMap.visitorDetails || visitorMap.visitorDetails.length === 0) {
       return <div>Loading...</div>;
     }
-    
-    const {visitorDetails, userDetail} = visitorMap;
-    
+
+    const { visitorDetails, userDetail } = visitorMap;
+
     let filteredVisitorDetails = visitorDetails
       // Do not display graph with no traffic history
       .filter(visitor => visitor.value.views.length > 0)
@@ -66,8 +66,6 @@ class App extends Component {
       });
 
     l("--- render, visitorMap ---", visitorMap);
-
-    
 
     return (
       <div className="App">
