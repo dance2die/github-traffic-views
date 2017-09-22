@@ -7,7 +7,11 @@
 }
 
 .UserCard-title {
-    padding: 15px;
+    background-color: #f6f8fa;
+    color: #123;
+    padding: 10px;
+    border: 1px solid #dfe2e5;
+    font-weight: bold;
 }
 
 .UserCard main {
@@ -15,6 +19,11 @@
     flex-direction: row;
     align-items: flex-start;
     padding: 0 0 15px 15px;
+    margin-top: 15px;
+}
+
+.sectionPadding {
+    margin: 10px;
 }
 
 /* Avartar */
@@ -22,19 +31,32 @@
     padding-right: 15px;
 }
 
-/* content section */
+/* content section
 .UserCard main > section:nth-child(2) {
     padding-right: 15px;
     margin: -3px;
+} */
+
+.UserCard-bio {
+    padding: 0 20px 0 0;
 }
 
+.UserCard-location {
+    margin: 5px 0;
+}
+
+.UserCard-bio_location-separator {
+    width: 95%;
+    margin-left: 0;
+    border-color: #eaecef;
+}
 
 .UserCard img {
-    width: 100px;
-    height: 100px;
+    width: 125px;
+    height: auto;
     border-radius: 6px;
 }
 
-.UserCard-follow {
-    border-top: 1px solid #eaecef;
+svg {
+    margin-right: 5px;
 }
